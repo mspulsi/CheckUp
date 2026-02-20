@@ -1,0 +1,172 @@
+:root {
+  /* Light theme - warm and inviting wellness aesthetic */
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F5F1EB;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #E8E4DE;
+  
+  /* Accent colors - earthy terracotta and forest green */
+  --accent-primary: #C45D3E;
+  --accent-secondary: #5A8F7B;
+  --accent-tertiary: #D4A853;
+  --accent-glow: rgba(196, 93, 62, 0.15);
+  
+  /* Text colors */
+  --text-primary: #2C2416;
+  --text-secondary: #6B5E4F;
+  --text-tertiary: #9C8E7C;
+  --text-inverse: #FDFBF7;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #C45D3E 0%, #D4A853 100%);
+  --gradient-secondary: linear-gradient(135deg, #5A8F7B 0%, #3D5A4C 100%);
+  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F9F7F3 100%);
+  --gradient-glow: radial-gradient(ellipse at 50% 0%, rgba(196, 93, 62, 0.08) 0%, transparent 60%);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(44, 36, 22, 0.06);
+  --shadow-md: 0 4px 16px rgba(44, 36, 22, 0.08);
+  --shadow-lg: 0 8px 32px rgba(44, 36, 22, 0.12);
+  --shadow-glow: 0 0 40px rgba(196, 93, 62, 0.15);
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg-primary);
+}
+
+/* Mobile container */
+.app-container {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background patterns */
+.app-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 430px;
+  height: 100%;
+  background: var(--gradient-glow);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Button reset */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Input reset */
+input, textarea {
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+/* Link reset */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Image reset */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Utility classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

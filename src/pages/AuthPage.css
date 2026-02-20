@@ -1,0 +1,308 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background pattern */
+.auth-bg-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.bg-circle-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-primary);
+  opacity: 0.15;
+  top: -100px;
+  right: -100px;
+  animation: float 20s ease-in-out infinite;
+}
+
+.bg-circle-2 {
+  width: 250px;
+  height: 250px;
+  background: var(--accent-secondary);
+  opacity: 0.12;
+  bottom: 20%;
+  left: -80px;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+.bg-circle-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--accent-tertiary);
+  opacity: 0.1;
+  bottom: -50px;
+  right: 20%;
+  animation: float 18s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -20px) scale(1.05); }
+  50% { transform: translate(-10px, 20px) scale(0.95); }
+  75% { transform: translate(-20px, -10px) scale(1.02); }
+}
+
+/* Container */
+.auth-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  gap: var(--space-xl);
+}
+
+/* Logo */
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.logo-svg {
+  width: 48px;
+  height: 48px;
+  color: var(--text-primary);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Welcome */
+.auth-welcome {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.welcome-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.welcome-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.input-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: var(--space-md);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  transition: color var(--transition-fast);
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) * 2 + 18px);
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-elevated);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.input-wrapper input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
+}
+
+.input-wrapper input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: var(--accent-primary);
+}
+
+.password-toggle {
+  position: absolute;
+  right: var(--space-md);
+  color: var(--text-tertiary);
+  padding: var(--space-xs);
+  transition: color var(--transition-fast);
+}
+
+.password-toggle:hover {
+  color: var(--text-secondary);
+}
+
+/* Checkbox */
+.checkbox-group {
+  overflow: hidden;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  cursor: pointer;
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--bg-elevated);
+}
+
+.checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox-custom {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  color: transparent;
+  transition: all var(--transition-fast);
+}
+
+.checkbox-label input:checked + .checkbox-custom {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-inverse);
+}
+
+.checkbox-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Submit button */
+.auth-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  background: var(--gradient-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-inverse);
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-glow);
+  transition: all var(--transition-fast);
+  margin-top: var(--space-sm);
+}
+
+.auth-submit:hover {
+  box-shadow: var(--shadow-glow), var(--shadow-md);
+}
+
+/* Forgot password */
+.forgot-password {
+  align-self: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: var(--space-sm);
+  transition: color var(--transition-fast);
+}
+
+.forgot-password:hover {
+  color: var(--accent-primary);
+}
+
+/* Toggle */
+.auth-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--bg-elevated);
+}
+
+.toggle-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.toggle-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--accent-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: var(--space-xs) var(--space-sm);
+  transition: all var(--transition-fast);
+}
+
+.toggle-button:hover {
+  color: var(--accent-tertiary);
+}
+
+.toggle-button svg {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.7; transform: scale(1.2) rotate(15deg); }
+}
