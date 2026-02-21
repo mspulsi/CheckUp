@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { motion } from 'framer-motion'
-import { Flame, Settings, Grid, List, Heart, Eye } from 'lucide-react'
+import { Flame, Grid, List, Heart, Eye, X } from 'lucide-react'
 import { AuthContext } from '../App'
 import Header from '../components/Header'
 import './SavedPage.css'
@@ -72,9 +72,43 @@ const savedContent = [
 ]
 
 function SavedPage() {
-  const { user } = useContext(AuthContext)
+  const { user, updateUser } = useContext(AuthContext)
   const [viewMode, setViewMode] = useState('grid')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [editForm, setEditForm] = useState({ name: '', email: '', username: '', dob: '', medicalField: '' })
+
+  const openEditModal = () => {
+    setEditForm({
+      name: user?.name || '',
+      email: user?.email || '',
+      username: user?.username || '',
+      dob: user?.dob || '',
+      medicalField: user?.medicalField || '',
+    })
+    setShowEditModal(true)
+  }
+
+  const handleSaveProfile = async () => {
+    try {
+      const res = await fetch(`/api/users/${user.user_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: editForm.name,
+          email: editForm.email,
+          dob: editForm.dob,
+          medicalField: editForm.medicalField,
+        }),
+      })
+      if (!res.ok) return
+      const updated = await res.json()
+      updateUser(updated)
+      setShowEditModal(false)
+    } catch {
+      // keep modal open on network error
+    }
+  }
 
   const categories = ['all', 'nutrition', 'fitness', 'health']
   
@@ -118,8 +152,8 @@ function SavedPage() {
             <p className="profile-email">{user?.email || 'user@email.com'}</p>
           </div>
 
-          <button className="profile-settings">
-            <Settings size={20} />
+          <button className="profile-settings" onClick={openEditModal}>
+            Edit Profile
           </button>
         </motion.div>
 
@@ -231,6 +265,75 @@ function SavedPage() {
           </motion.div>
         </motion.div>
       </div>
+      {showEditModal && (
+        <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+          <motion.div
+            className="edit-profile-modal"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h2 className="modal-title">Edit Profile</h2>
+              <button className="modal-close" onClick={() => setShowEditModal(false)}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <label className="form-label">
+                Username
+                <input
+                  className="form-input"
+                  type="text"
+                  value={editForm.username}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, username: e.target.value, name: e.target.value }))}
+                  placeholder="@username"
+                />
+              </label>
+              <label className="form-label">
+                Email
+                <input
+                  className="form-input"
+                  type="email"
+                  value={editForm.email}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="Your email"
+                />
+              </label>
+              <label className="form-label">
+                Date of Birth
+                <input
+                  className="form-input"
+                  type="date"
+                  value={editForm.dob}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, dob: e.target.value }))}
+                />
+              </label>
+              <label className="form-label">
+                Medical Background
+                <span className="form-label-optional"> (optional)</span>
+                <input
+                  className="form-input"
+                  type="text"
+                  value={editForm.medicalField}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, medicalField: e.target.value }))}
+                  placeholder="e.g. diabetes, hypertension..."
+                />
+              </label>
+            </div>
+
+            <div className="modal-footer">
+              <button className="modal-btn cancel" onClick={() => setShowEditModal(false)}>
+                Cancel
+              </button>
+              <button className="modal-btn save" onClick={handleSaveProfile}>
+                Save
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }

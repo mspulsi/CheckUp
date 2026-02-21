@@ -186,6 +186,27 @@
   color: var(--text-secondary);
 }
 
+/* Sign-up only fields */
+.signup-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  overflow: hidden;
+}
+
+.optional-tag {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Date input icon padding fix */
+.input-wrapper input[type="date"] {
+  color-scheme: dark;
+}
+
 /* Checkbox */
 .checkbox-group {
   overflow: hidden;
@@ -232,6 +253,14 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.4;
+}
+
+/* Error message */
+.auth-error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0;
 }
 
 /* Submit button */

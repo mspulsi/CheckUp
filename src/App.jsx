@@ -24,8 +24,12 @@ function App() {
     setIsAuthenticated(false)
   }
 
+  const updateUser = (updates) => {
+    setUser(prev => ({ ...prev, ...updates }))
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, updateUser }}>
       <BrowserRouter>
         <div className="app-container">
           <AnimatePresence mode="wait">

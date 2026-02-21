@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Lock, Eye, EyeOff, Bell, ArrowRight, Sparkles } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, Bell, ArrowRight, Sparkles, User, Calendar, Stethoscope } from 'lucide-react'
 import { AuthContext } from '../App'
 import './AuthPage.css'
 
@@ -9,13 +9,37 @@ function AuthPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [dob, setDob] = useState('')
+  const [medicalField, setMedicalField] = useState('')
   const [notifications, setNotifications] = useState(true)
+  const [error, setError] = useState('')
   const { login } = useContext(AuthContext)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Simulate login/register
-    login({ email, name: email.split('@')[0] })
+    setError('')
+
+    const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register'
+    const body = isLogin
+      ? { email, password }
+      : { email, password, username, dob, medicalField }
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong')
+        return
+      }
+      login(data)
+    } catch {
+      setError('Could not reach server')
+    }
   }
 
   const containerVariants = {
@@ -117,6 +141,60 @@ function AuthPage() {
           <AnimatePresence mode="wait">
             {!isLogin && (
               <motion.div
+                className="signup-fields"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+              >
+                <div className="input-group">
+                  <label className="input-label">Username</label>
+                  <div className="input-wrapper">
+                    <User size={18} className="input-icon" />
+                    <input
+                      type="text"
+                      placeholder="@username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label className="input-label">Date of Birth</label>
+                  <div className="input-wrapper">
+                    <Calendar size={18} className="input-icon" />
+                    <input
+                      type="date"
+                      value={dob}
+                      onChange={(e) => setDob(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label className="input-label">
+                    Medical Background
+                    <span className="optional-tag"> (optional)</span>
+                  </label>
+                  <div className="input-wrapper">
+                    <Stethoscope size={18} className="input-icon" />
+                    <input
+                      type="text"
+                      placeholder="e.g. diabetes, hypertension..."
+                      value={medicalField}
+                      onChange={(e) => setMedicalField(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait">
+            {!isLogin && (
+              <motion.div
                 className="checkbox-group"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
@@ -138,6 +216,8 @@ function AuthPage() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {error && <p className="auth-error">{error}</p>}
 
           <motion.button
             type="submit"
