@@ -1,5 +1,6 @@
 # CheckUp: Evidence-Based Health Literacy
 
+## App Summary
 CheckUp is a digital platform designed to combat health misinformation by bridging the gap between viral social media trends and verified medical research. Aimed at health-conscious adolescents and proactive parents, the app features a familiar social-style feed that fact-checks wellness myths using evidence-based articles.
 
 The platform integrates gamified "Misconception Quizzes" to reinforce medical literacy, a search engine for investigating specific trends, and personalized profiles for saving verified insights.
